@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+def globalConf = rootProject.ext
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion 25
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+        buildConfigField "String", "FACTS_BASE_URL", "\"${rootProject.ext.factsBaseUrl}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    Map<String, String> dependencies = globalConf.commonDependencies
+
+    implementation dependencies.retrofit
+    implementation dependencies.gson
+    implementation dependencies.retrofitAdapterRxJava2
+    implementation dependencies.retrofitConverterGson
+    implementation dependencies.okhttp
+    implementation dependencies.dagger
+    implementation dependencies.rxJava2
+    implementation dependencies.rx2Android
+    implementation dependencies.junit
+    implementation dependencies.mockitoCore
+    implementation dependencies.mockitoKotlin
+
+    kapt dependencies.daggerCompiler
+    kapt dependencies.daggerAnnotationProcessor
+}
