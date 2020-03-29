@@ -56,6 +56,26 @@ class FactsListViewModelTest {
     }
 
     @Test
+    fun `User should see the lists of facts from network for all the reloadFacts call`() {
+
+        val factsBusinessModel = FactsBusinessModel().apply {
+            title = "Test"
+            factItemBusinessModelList =
+                listOf(FactItemBusinessModel(), FactItemBusinessModel(), FactItemBusinessModel())
+        }
+
+        whenever(connectionManager.isConnectedToInternet()).thenReturn(true)
+        whenever(getFactsUseCase()).thenReturn(Single.just(factsBusinessModel))
+
+        viewModel.reloadFacts()
+        viewModel.reloadFacts()
+
+        verify(getFactsUseCase, times(2)).invoke()
+        assertEquals(viewModel.loadingObserver.value, false)
+        assertEquals(viewModel.factsObserver.value, factsBusinessModel.mapToUiModel())
+    }
+
+    @Test
     fun `User should see the lists of facts from local storage on second call to showFacts`() {
 
         val factsBusinessModel = FactsBusinessModel().apply {
