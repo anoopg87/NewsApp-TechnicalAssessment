@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">News App</string>
+    <string name="error_in_fetching_data">Error in fetching data</string>
+    <string name="please_check_the_internet_connection_error">Please check the internet connection !</string>
 </resources>

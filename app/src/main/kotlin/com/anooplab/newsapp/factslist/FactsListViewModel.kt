@@ -2,6 +2,7 @@ package com.anooplab.newsapp.factslist
 
 import androidx.lifecycle.LiveData
 import com.anooplab.business.usecase.IGetFactsUseCase
+import com.anooplab.newsapp.R
 import com.anooplab.newsapp.base.BaseViewModel
 import com.anooplab.newsapp.base.SingleLiveEvent
 import com.anooplab.newsapp.factslist.model.FactsUiModel
@@ -22,8 +23,8 @@ class FactsListViewModel @Inject constructor(
     private val loadingLiveData = SingleLiveEvent<Boolean>()
     val loadingObserver: LiveData<Boolean> = loadingLiveData
 
-    private val errorLiveData = SingleLiveEvent<String>()
-    val errorObserver: LiveData<String> = errorLiveData
+    private val errorLiveData = SingleLiveEvent<Int>()
+    val errorObserver: LiveData<Int> = errorLiveData
 
     fun showFacts() {
         // Check we already have data stored locally. If yes we just show that information
@@ -45,11 +46,11 @@ class FactsListViewModel @Inject constructor(
             }, {
                 Timber.d("Error in fetching facts", it)
                 loadingLiveData.value = false
-                errorLiveData.value = "Error in fetching data"
+                errorLiveData.value = R.string.error_in_fetching_data
             }).addSubscription()
         } else {
             loadingLiveData.value = false
-            errorLiveData.value = "Please check the internet connection"
+            errorLiveData.value = R.string.please_check_the_internet_connection_error
         }
     }
 }

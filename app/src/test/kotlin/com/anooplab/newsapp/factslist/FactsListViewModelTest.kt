@@ -3,6 +3,7 @@ package com.anooplab.newsapp.factslist
 import com.anooplab.business.model.FactItemBusinessModel
 import com.anooplab.business.model.FactsBusinessModel
 import com.anooplab.business.usecase.IGetFactsUseCase
+import com.anooplab.newsapp.R
 import com.anooplab.newsapp.base.BaseTest
 import com.anooplab.newsapp.factslist.model.mapToUiModel
 import com.anooplab.newsapp.util.IConnectionManager
@@ -98,7 +99,7 @@ class FactsListViewModelTest : BaseTest() {
 
         verify(getFactsUseCase, times(1)).invoke()
         assertEquals(viewModel.loadingObserver.value, false)
-        assertEquals(viewModel.errorObserver.value, "Error in fetching data")
+        assertEquals(viewModel.errorObserver.value, R.string.error_in_fetching_data)
     }
 
     @Test
@@ -109,6 +110,6 @@ class FactsListViewModelTest : BaseTest() {
         viewModel.showFacts()
 
         verify(getFactsUseCase, never()).invoke()
-        assertEquals(viewModel.errorObserver.value, "Please check the internet connection")
+        assertEquals(viewModel.errorObserver.value, R.string.please_check_the_internet_connection_error)
     }
 }
