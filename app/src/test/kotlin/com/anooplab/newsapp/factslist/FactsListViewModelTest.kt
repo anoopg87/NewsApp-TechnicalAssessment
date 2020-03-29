@@ -1,9 +1,9 @@
 package com.anooplab.newsapp.factslist
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anooplab.business.model.FactItemBusinessModel
 import com.anooplab.business.model.FactsBusinessModel
 import com.anooplab.business.usecase.IGetFactsUseCase
+import com.anooplab.newsapp.base.BaseTest
 import com.anooplab.newsapp.factslist.model.mapToUiModel
 import com.anooplab.newsapp.util.IConnectionManager
 import com.nhaarman.mockitokotlin2.never
@@ -13,16 +13,10 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 
-class FactsListViewModelTest {
-    @Rule
-    @JvmField
-    val instantExecutorRule = InstantTaskExecutorRule()
-
+class FactsListViewModelTest : BaseTest() {
     @Mock
     lateinit var getFactsUseCase: IGetFactsUseCase
 
@@ -33,7 +27,6 @@ class FactsListViewModelTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
         viewModel = FactsListViewModel(getFactsUseCase, connectionManager)
     }
 
