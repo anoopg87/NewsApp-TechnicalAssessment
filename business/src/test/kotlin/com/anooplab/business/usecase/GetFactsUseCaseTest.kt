@@ -26,7 +26,7 @@ class GetFactsUseCaseTest : RxTest() {
     }
 
     @Test
-    fun `invoking getFactsUseCase should return FactsBusinessModel without any error`() {
+    fun `Invoking getFactsUseCase should return FactsBusinessModel without any error`() {
         val facts = Facts().apply {
             title = "Test"
             factItemList = listOf(FactItem(), FactItem(), FactItem())
@@ -39,5 +39,23 @@ class GetFactsUseCaseTest : RxTest() {
         testObserver.awaitTerminalEvent()
         testObserver.assertCompleteNormally()
         testObserver.assertValue(facts.mapToBusinessModel())
+    }
+
+    @Test
+    fun `Empty FactItem values should be filter out`() {
+        val facts = Facts().apply {
+            title = "Test"
+            factItemList = listOf(FactItem(title = "Test1"), FactItem(), FactItem())
+        }
+
+        val testObserver = TestObserver<FactsBusinessModel>()
+        whenever(factsRepository.getFacts()).thenReturn(Single.just(facts))
+
+        getFactsUseCase().subscribe(testObserver)
+
+        testObserver.awaitTerminalEvent()
+        testObserver.assertCompleteNormally()
+        testObserver.assertValue(facts.mapToBusinessModel())
+        assert(testObserver.values()[0].factItemBusinessModelList.size == 1)
     }
 }
