@@ -96,6 +96,19 @@ class FactsListViewModelTest {
     }
 
     @Test
+    fun `show error message on exception`() {
+
+        whenever(connectionManager.isConnectedToInternet()).thenReturn(true)
+        whenever(getFactsUseCase()).thenReturn(Single.error(Exception("Error")))
+
+        viewModel.showFacts()
+
+        verify(getFactsUseCase, times(1)).invoke()
+        assertEquals(viewModel.loadingObserver.value, false)
+        assertEquals(viewModel.errorObserver.value, "Error in fetching data")
+    }
+
+    @Test
     fun `Should show error message on no internet connection available`() {
 
         whenever(connectionManager.isConnectedToInternet()).thenReturn(false)
