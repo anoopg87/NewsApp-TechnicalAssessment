@@ -5,7 +5,10 @@ import com.anooplab.core.model.Facts
 
 fun Facts.mapToBusinessModel(): FactsBusinessModel {
     return FactsBusinessModel(
-        title, factItemList.map { it.mapToBusinessModel() }
+        title, factItemList.filter {
+            // Remove empty factsItems from the list
+            it.title != null || it.description != null || it.imageHref != null
+        }.map { it.mapToBusinessModel() }
     )
 }
 
