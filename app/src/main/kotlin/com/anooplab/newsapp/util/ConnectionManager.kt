@@ -13,10 +13,8 @@ class ConnectionManager(
     override fun isConnectedToInternet(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var isConnected = false
         val activeNetwork = connectivityManager.activeNetworkInfo
-        isConnected = activeNetwork != null &&
+        return activeNetwork != null &&
             activeNetwork.isConnectedOrConnecting
-        return isConnected
     }
 }
