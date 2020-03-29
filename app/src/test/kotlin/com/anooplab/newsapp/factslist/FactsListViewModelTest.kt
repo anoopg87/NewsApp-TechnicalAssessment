@@ -46,6 +46,7 @@ class FactsListViewModelTest {
                 listOf(FactItemBusinessModel(), FactItemBusinessModel(), FactItemBusinessModel())
         }
 
+        whenever(connectionManager.isConnectedToInternet()).thenReturn(true)
         whenever(getFactsUseCase()).thenReturn(Single.just(factsBusinessModel))
 
         viewModel.showFacts()
