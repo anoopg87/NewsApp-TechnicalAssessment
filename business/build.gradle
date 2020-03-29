@@ -31,6 +31,12 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 
+    lintOptions {
+        // Fix the Lint issue
+        // https://github.com/mockito/mockito/issues/1876
+        warning 'InvalidPackage'
+    }
+
 }
 
 dependencies {

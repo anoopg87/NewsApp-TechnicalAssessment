@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit
 
 @Module
 class ApiModule {
-
     @Provides
     @CoreScope
     fun provideFactsApi(): FactsApi {
@@ -26,7 +25,6 @@ class ApiModule {
         apiClass: Class<T>,
         callAdapter: CallAdapter.Factory = RxJava2CallAdapterFactory.create()
     ): T {
-
         val clientBuilder = OkHttpClient.Builder()
         val client = clientBuilder
             .connectTimeout(60, TimeUnit.SECONDS)
